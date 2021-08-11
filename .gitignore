@@ -1,3 +1,12 @@
+# Jetbrains IDE workspace
+.idea
+
+# Environments
+.env
+
+# Package lock
+package-lock.json
+
 # Logs
 logs
 *.log

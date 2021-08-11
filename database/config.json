@@ -1,0 +1,7 @@
+{
+  "database": "dataabse",
+  "username": "",
+  "password": "",
+  "dialect": "sqlite",
+  "storage": "database.sqlite"
+}
