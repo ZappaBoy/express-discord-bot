@@ -10,4 +10,5 @@ services:
     ports:
       - "${PORT}:3000"
     volumes:
+      - .:/usr/src/app
       - ./database/database.sqlite:/app/database/database.sqlite

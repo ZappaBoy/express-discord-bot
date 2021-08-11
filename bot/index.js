@@ -1,27 +1,39 @@
 require('dotenv').config()
 const TOKEN = process.env.TOKEN || (console.error("TOKEN not set.") && process.exit(1))
-
 const {Client, Intents, Collection} = require('discord.js')
 const bot = new Client({intents: [Intents.FLAGS.GUILDS]});
-const botCommands = require('./commands')
+const commands = require('./commands')
+
+/*
+    Replace with a string pattern or a char to identify a command.
+    Example:
+        1) commandTriggerPattern = 'zappabot ' // Note the space at the end.
+            // Message 'zappabot help' trigger help command.
+        2) commandTriggerPattern = '!'
+            // Message '!help' trigger help command.
+*/
+const commandTriggerPattern = 'zappabot '
 
 bot.commands = new Collection()
 
-Object.keys(botCommands).map(key => {
-    bot.commands.set(botCommands[key].name, botCommands[key])
+Object.keys(commands).map(key => {
+    bot.commands.set(commands[key].name, commands[key])
 })
 
 bot.on('ready', () => {
-    console.log(`Logged in as ${bot.user.tag}.`);
+    console.log(`Bot is ready and logged in as ${bot.user.tag}.`);
 });
 
 bot.on('message', msg => {
-    const args = msg.content.split(/ +/);
+    if (!msg.content.startsWith(commandTriggerPattern)) {
+        return
+    }
+    const message = msg.content.substring(commandTriggerPattern.length);
+    const args = message.split(/ +/);
     const command = args.shift().toLowerCase();
-    console.info(`Called command: ${command}`);
-
     if (!bot.commands.has(command)) return;
 
+    console.info(`Called command: ${command}`);
     try {
         bot.commands.get(command).execute(msg, args);
     } catch (error) {
