@@ -4,7 +4,7 @@ module.exports = {
     script: "./app.js",
     watch: ['../'],
     watch_delay: 1000,
-    ignore_watch: ['node_modules', 'mongo-volume'],
+    ignore_watch: ['node_modules', 'database/database.sqlite'],
     env: {
       NODE_ENV: "development",
     },
